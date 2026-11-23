@@ -25,15 +25,33 @@
 }
 * { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
-body { margin: 0; background: var(--bg); color: var(--ink); font: 400 20px/1.65 var(--font); letter-spacing: -.01em; word-break: keep-all; }
+body { margin: 0; background: var(--bg); color: var(--ink); font: 400 19px/1.65 var(--font); letter-spacing: -.01em; word-break: keep-all; overflow-x: hidden; }
 a { color: var(--accent); }
-.top { position: sticky; top: 0; z-index: 10; display: flex; align-items: center; gap: 22px; padding: 12px 32px; background: var(--top-bg); backdrop-filter: saturate(180%) blur(16px); border-bottom: 1px solid var(--line); font-size: 15px; }
-.top img { height: 22px; }
-.top nav { display: flex; gap: 4px; }
-.top nav a { padding: 5px 12px; border-radius: 99px; color: var(--ink-2); text-decoration: none; font-weight: 600; }
-.top nav a:hover { background: var(--hover); }
-.wrap { max-width: 1120px; margin: 0 auto; padding: 0 32px; }
-header.hero { padding: 72px 0 40px; }
+code { font-family: var(--mono); font-size: .88em; padding: 1px 6px; border-radius: 6px; background: var(--bg); color: var(--ink); overflow-wrap: anywhere; word-break: break-word; }
+/* 좌측 세로 고정 목차(Vertical Sticky TOC) + 본문 2열 뼈대 */
+.mob-top, .mob-drawer { display: none; }
+.page-shell { display: grid; grid-template-columns: 248px minmax(0, 1fr); min-height: 100vh; max-width: 1460px; margin: 0 auto; }
+.toc-rail { position: sticky; top: 0; align-self: start; height: 100vh; overflow-y: auto; padding: 28px 18px 24px 22px; background: var(--card); border-right: 1px solid var(--line); display: flex; flex-direction: column; gap: 18px; }
+.toc-brand { display: flex; align-items: center; gap: 10px; font-weight: 800; font-size: 16px; color: var(--ink); letter-spacing: -.02em; text-decoration: none; padding-bottom: 14px; border-bottom: 1px solid var(--line); }
+.toc-dot { width: 10px; height: 10px; border-radius: 99px; background: var(--accent); flex-shrink: 0; }
+.toc-label { font-size: 14px; font-weight: 700; color: var(--ink-3); letter-spacing: .02em; margin-bottom: 6px; padding-left: 10px; }
+.toc-nav { display: flex; flex-direction: column; gap: 4px; }
+.toc-link { display: grid; grid-template-columns: 24px 1fr; align-items: start; gap: 8px; padding: 9px 10px; border-radius: 10px; color: var(--ink-2); text-decoration: none; font-size: 15px; font-weight: 600; line-height: 1.38; border-left: 3px solid transparent; transition: background .15s, color .15s, border-color .15s; }
+.toc-link:hover { background: var(--bg); color: var(--ink); }
+.toc-link .tn { display: inline-grid; place-items: center; width: 22px; height: 22px; border-radius: 99px; background: var(--bg); color: var(--ink-3); font-size: 14px; font-weight: 700; margin-top: 1px; }
+.toc-link small { display: block; font-size: 14px; font-weight: 400; color: var(--ink-3); margin-top: 2px; line-height: 1.35; }
+.toc-link.is-active { background: var(--accent-soft); color: var(--accent); border-left-color: var(--accent); }
+.toc-link.is-active .tn { background: var(--accent); color: #fff; }
+.toc-link.is-active small { color: var(--ink-2); }
+.toc-foot { margin-top: auto; padding-top: 14px; border-top: 1px solid var(--line); display: flex; flex-direction: column; gap: 8px; }
+.toc-prog-lbl { display: flex; justify-content: space-between; font-size: 14px; color: var(--ink-3); font-weight: 600; }
+.toc-prog-track { height: 6px; border-radius: 99px; background: var(--bg); overflow: hidden; }
+.toc-prog-fill { height: 100%; width: 0%; background: var(--accent); border-radius: 99px; transition: width .12s; }
+.toc-top-btn { display: inline-flex; align-items: center; justify-content: center; padding: 7px 12px; border-radius: 10px; background: var(--bg); color: var(--ink-2); font-size: 14px; font-weight: 700; text-decoration: none; }
+.toc-top-btn:hover { background: var(--hover); color: var(--ink); }
+.main-col { min-width: 0; }
+.wrap { max-width: 1100px; margin: 0 auto; padding: 0 32px; }
+header.hero { padding: 52px 0 36px; }
 .eyebrow { color: var(--ink-3); font-size: 16px; font-weight: 600; }
 h1 { margin: 8px 0 14px; font-size: 52px; line-height: 1.15; letter-spacing: -.03em; }
 .hero p { margin: 0; max-width: 860px; color: var(--ink-2); font-size: 23px; }
@@ -142,16 +160,45 @@ details.calc { margin-top: 14px; padding: 12px 18px; border-radius: 12px; backgr
 details.calc summary { color: var(--accent); font-weight: 700; cursor: pointer; }
 details.calc[open] summary { margin-bottom: 8px; }
 details.calc code { font-family: var(--mono); font-size: 16px; }
-/* 식 블록: 핵심 식을 본문에 크게, 아래에 기호 설명 한 줄 */
+/* 개조식 해설 카드 목록 */
+.card--accent { border-left: 4px solid var(--accent); }
+.bul { margin: 0; padding: 0; list-style: none; display: grid; gap: 10px; }
+.bul li { position: relative; padding-left: 18px; color: var(--ink-2); font-size: 17px; line-height: 1.62; min-width: 0; overflow-wrap: anywhere; }
+.bul li::before { content: ""; position: absolute; left: 0; top: 11px; width: 7px; height: 7px; border-radius: 99px; background: var(--accent); }
+.bul li strong { color: var(--ink); font-weight: 700; }
+.bul--compact { gap: 6px; }
+.bul--compact li { font-size: 16px; line-height: 1.55; }
+.bul--compact li::before { top: 9px; width: 6px; height: 6px; }
+/* 변수 유형 뱃지 (Feature 사전용) */
+.vtype { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 14px; font-weight: 700; white-space: nowrap; }
+.vtype--cont { background: var(--ok-soft); color: var(--ok); }
+.vtype--disc { background: var(--warn-soft); color: var(--warn); }
+.vtype--meta { background: var(--bg); color: var(--ink-3); }
+/* 도식 전용 부각(Spotlight) 유틸리티 (나열식 표에는 적용하지 않는다) */
+.spot-item { cursor: pointer; opacity: 0.32; transition: opacity .22s ease, filter .22s ease; outline: none; }
+.spot-item:hover, .spot-item:focus-visible { opacity: 0.78; }
+.spot-item.is-active { opacity: 1; filter: drop-shadow(0 3px 10px rgb(0 65 145 / .24)); }
+/* 식 블록: TeX -> 정적 MathML (scripts/render_tex.py) */
 .eq { margin: 16px 0; padding: 18px 22px; border-radius: 12px; background: var(--card); box-shadow: var(--shadow); text-align: center; overflow-x: auto; }
-.eq .f { font-family: var(--math); font-size: 24px; color: var(--ink); }
+.eq .f, .eq-formula { padding: 14px 16px; border-radius: 10px; background: var(--bg); font-family: var(--math); font-size: 20px; text-align: center; color: var(--ink); overflow-x: auto; }
+.eq-formula math { font-family: var(--math); font-size: 20px; }
+.eq-inline math { font-family: var(--math); font-size: 1.05em; vertical-align: middle; }
 .eq .f sub, .eq .f sup { font-size: .7em; }
 .eq .sym { margin-top: 8px; color: var(--ink-3); font-size: 16px; text-align: left; }
 /* 장 안 소목차: 하위 절이 넷 이상인 긴 장 */
 .subnav { display: flex; flex-wrap: wrap; gap: 8px; margin: 0 0 26px; }
 .subnav a { padding: 6px 12px; border-radius: 99px; background: var(--card); box-shadow: var(--shadow); color: var(--ink-2); font-size: 15px; font-weight: 600; text-decoration: none; }
+@media (max-width: 1160px) {
+  .page-shell { grid-template-columns: 1fr; }
+  .toc-rail { display: none; }
+  .mob-top { position: sticky; top: 0; z-index: 30; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 10px 18px; background: var(--top-bg); backdrop-filter: saturate(180%) blur(16px); border-bottom: 1px solid var(--line); font-size: 15px; }
+  .mob-toc-btn { padding: 6px 14px; border: 1px solid var(--line); border-radius: 99px; background: var(--card); color: var(--accent); font: 700 14.5px/1.3 var(--font); cursor: pointer; }
+  .mob-drawer { display: none; position: sticky; top: 49px; z-index: 29; background: var(--card); border-bottom: 1px solid var(--line); box-shadow: var(--shadow); padding: 12px 16px; }
+  .mob-drawer.is-open { display: block; }
+  .mob-drawer .toc-link small { display: none; }
+}
 @media (max-width: 900px) {
-  .tbl { font-size: 16px; } .tbl th, .tbl td { padding: 10px 12px; } .fig { padding: 16px; }
+  .tbl { font-size: 15px; } .tbl th, .tbl td { padding: 10px 11px; } .fig { padding: 16px; }
   .fig svg { min-width: 720px; } /* 좁은 화면에서는 글자를 줄이지 않고 가로로 넘겨 본다 */
   .stepper [role=tabpanel] { grid-template-columns: 1fr; } .stepper { padding: 16px; }
 }
@@ -161,11 +208,41 @@ details.calc code { font-family: var(--mono); font-size: 16px; }
 </style>
 </head>
 <body>
-<div class="top"><strong>로고</strong><nav>
-  <a href="#ch1">장 이름 1</a><a href="#ch4">데모</a><a href="#ch5">의견 요청</a></nav></div>
+<div class="mob-top">
+  <a href="#top" class="toc-brand" style="padding:0;border:0"><span class="toc-dot"></span>보고서 제목</a>
+  <button type="button" class="mob-toc-btn" id="mob-toc-toggle" aria-expanded="false" aria-controls="mob-drawer">목차 ☰</button>
+</div>
+<div class="mob-drawer" id="mob-drawer">
+  <nav class="toc-nav" aria-label="모바일 목차">
+    <a class="toc-link" href="#top" data-sec="top"><span class="tn">0</span><span>개요</span></a>
+    <a class="toc-link" href="#ch1" data-sec="ch1"><span class="tn">1</span><span>장 이름 1</span></a>
+    <a class="toc-link" href="#ch4" data-sec="ch4"><span class="tn">4</span><span>데모</span></a>
+    <a class="toc-link" href="#ch5" data-sec="ch5"><span class="tn">5</span><span>의견 요청</span></a>
+  </nav>
+</div>
 
+<div class="page-shell">
+<aside class="toc-rail" aria-label="보고서 세로 목차">
+  <a href="#top" class="toc-brand"><span class="toc-dot"></span><span>보고서 제목</span></a>
+  <div>
+    <div class="toc-label">목차</div>
+    <nav class="toc-nav">
+      <a class="toc-link is-active" href="#top" data-sec="top"><span class="tn">0</span><span>개요<small>핵심 요약</small></span></a>
+      <a class="toc-link" href="#ch1" data-sec="ch1"><span class="tn">1</span><span>장 이름 1<small>핵심 키워드</small></span></a>
+      <a class="toc-link" href="#ch4" data-sec="ch4"><span class="tn">4</span><span>데모<small>인터랙티브 확인</small></span></a>
+      <a class="toc-link" href="#ch5" data-sec="ch5"><span class="tn">5</span><span>의견 요청<small>결정 · 다음 단계</small></span></a>
+    </nav>
+  </div>
+  <div class="toc-foot">
+    <div class="toc-prog-lbl"><span>읽기 진행률</span><span id="toc-pct">0%</span></div>
+    <div class="toc-prog-track"><div class="toc-prog-fill" id="toc-prog-fill"></div></div>
+    <a href="#top" class="toc-top-btn">↑ 맨 위로</a>
+  </div>
+</aside>
+
+<main class="main-col">
 <div class="wrap">
-<header class="hero">
+<header class="hero" id="top">
   <div class="eyebrow">2026년 00월 00일 연구실 미팅</div>
   <h1>명사형 보고서 제목</h1>
   <p>보고서 전체를 한 문장으로 요약. 무엇을 보여 주고 무엇을 정하려는지.</p>
@@ -231,6 +308,8 @@ details.calc code { font-family: var(--mono); font-size: 16px; }
 </section>
 <footer>작성일 · 데이터 출처 · 화면 출처</footer>
 </div>
+</main>
+</div>
 <div class="lightbox" role="dialog" aria-label="확대 이미지"><img alt=""></div>
 <script>
 (() => {
@@ -277,6 +356,38 @@ details.calc code { font-family: var(--mono); font-size: 16px; }
   }
   document.querySelectorAll('[data-demo-full]').forEach(b => b.addEventListener('click', () => frame && frame.requestFullscreen()));
   document.querySelectorAll('[data-demo-tab]').forEach(b => b.addEventListener('click', () => demoUrl && window.open(demoUrl, '_blank')));
+
+  // 좌측 세로 고정 목차: Scroll-Spy, 읽기 진행률, 모바일 토글 드로어
+  const links = [...document.querySelectorAll('.toc-link')];
+  const secIds = [...new Set(links.map(a => a.dataset.sec).filter(Boolean))];
+  const secs = secIds.map(id => document.getElementById(id)).filter(Boolean);
+  const fill = document.getElementById('toc-prog-fill');
+  const pctEl = document.getElementById('toc-pct');
+  const mobBtn = document.getElementById('mob-toc-toggle');
+  const mobDrawer = document.getElementById('mob-drawer');
+  const onScroll = () => {
+    const docH = document.documentElement.scrollHeight - window.innerHeight;
+    const ratio = docH > 0 ? Math.max(0, Math.min(1, window.scrollY / docH)) : 0;
+    const pct = Math.round(ratio * 100);
+    if (fill) fill.style.width = pct + '%';
+    if (pctEl) pctEl.textContent = pct + '%';
+    let cur = secIds[0] || 'top';
+    for (const s of secs) if (s.getBoundingClientRect().top <= 140) cur = s.id;
+    if (ratio > 0.985 && secs.length) cur = secs[secs.length - 1].id;
+    links.forEach(a => a.classList.toggle('is-active', a.dataset.sec === cur));
+  };
+  window.addEventListener('scroll', onScroll, { passive: true });
+  onScroll();
+  if (mobBtn && mobDrawer) {
+    mobBtn.addEventListener('click', () => {
+      const open = mobDrawer.classList.toggle('is-open');
+      mobBtn.setAttribute('aria-expanded', open);
+    });
+    mobDrawer.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+      mobDrawer.classList.remove('is-open');
+      mobBtn.setAttribute('aria-expanded', 'false');
+    }));
+  }
 })();
 </script>
 </body>
