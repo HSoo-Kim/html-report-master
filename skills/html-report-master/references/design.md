@@ -54,7 +54,7 @@
 | 태그 | `.tag--real`, `.tag--mock` | 실제/예시 데이터 구분 |
 | 링크 버튼 | `.linkbtn`, `.linkbtn--ghost` | 원본 서비스 열기, 새 탭·전체 화면 |
 | 표 | `.tbl`, `tr.hl`, `.n` | 일반 표. 주인공 행 강조, 숫자 열 오른쪽 정렬, 항상 100% 선명 유지 |
-| 그림 칸 | `.fig`, `.cond` | 직접 그린 SVG 차트·도식. 색은 `var(--data-*)` |
+| 그림 칸 | `.fig`, `.cond` | 직접 그린 SVG 차트·도식. 색은 `var(--data-*)`, 모든 그래프에 x축·y축 이름과 단위 필수 표기 |
 | 단계 탭 | `.stepper` | 여러 단계로 진행되는 과정. 탭마다 그림 하나와 설명 |
 | TeX 수식 블록 | `.eq-formula` / `<tex-block>`, `<tex-inline>` | `scripts/render_tex.py`로 정적 MathML 변환 (`--math` 세리프, `data-tex` 보존) |
 | 계산 보기 | `details.calc` | 유도, 세부 수치, 설정값 |
