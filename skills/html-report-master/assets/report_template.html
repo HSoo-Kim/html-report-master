@@ -179,10 +179,10 @@ details.calc code { font-family: var(--mono); font-size: 16px; }
 .vtype--cont { background: var(--ok-soft); color: var(--ok); }
 .vtype--disc { background: var(--warn-soft); color: var(--warn); }
 .vtype--meta { background: var(--bg); color: var(--ink-3); }
-/* 도식 전용 부각(Spotlight) 유틸리티 (나열식 표에는 적용하지 않는다) */
-.spot-item { cursor: pointer; opacity: 0.32; transition: opacity .22s ease, filter .22s ease; outline: none; }
-.spot-item:hover, .spot-item:focus-visible { opacity: 0.78; }
-.spot-item.is-active { opacity: 1; filter: drop-shadow(0 3px 10px rgb(0 65 145 / .24)); }
+/* 선택 항목 강조 유틸리티 — 비선택 항목은 흐리지 않고(opacity: 1) 선택 항목만 진한 테두리·그림자로 강조 */
+.spot-item { cursor: pointer; opacity: 1; transition: filter .2s ease, border-color .2s ease, box-shadow .2s ease; outline: none; }
+.spot-item:hover, .spot-item:focus-visible { filter: drop-shadow(0 2px 6px rgb(0 65 145 / .16)); }
+.spot-item.is-active { filter: drop-shadow(0 4px 12px rgb(0 65 145 / .26)); }
 /* 식 블록: TeX -> 정적 MathML (scripts/render_tex.py) */
 .eq { margin: 16px 0; padding: 18px 22px; border-radius: 12px; background: var(--card); box-shadow: var(--shadow); text-align: center; overflow-x: auto; }
 .eq .f, .eq-formula { padding: 14px 16px; border-radius: 10px; background: var(--bg); font-family: var(--math); font-size: 20px; text-align: center; color: var(--ink); overflow-x: auto; }
