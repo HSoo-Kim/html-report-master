@@ -56,7 +56,7 @@
 | 표 | `.tbl`, `tr.hl`, `.n` | 일반 표. 주인공 행 강조, 숫자 열 오른쪽 정렬, 항상 100% 선명 유지 |
 | 그림 칸 | `.fig`, `.cond` | 직접 그린 SVG 차트·도식. 색은 `var(--data-*)`, 모든 그래프에 x축·y축 이름과 단위 필수 표기 |
 | 단계 탭 | `.stepper` | 여러 단계로 진행되는 과정. 탭마다 그림 하나와 설명 |
-| TeX 수식 블록 | `.eq-formula` / `<tex-block>`, `<tex-inline>` | `scripts/render_tex.py`로 정적 MathML 변환 (`--math` 세리프, `data-tex` 보존) |
+| TeX 수식 · 기호 풀이 창 | `.eq-formula`, `.sym-chip`, `.sym-pop`, `.gloss-modal` | `scripts/render_tex.py` 정적 MathML + 수식 바로 아래 클릭형 기호 풀이(`×`/바깥 클릭/`Esc` 닫기) + 전역 기호·용어 사전 팝업 |
 | 계산 보기 | `details.calc` | 유도, 세부 수치, 설정값 |
 | 장 안 소목차 | `.subnav` | 하위 절이 많은 긴 장 |
 
