@@ -169,6 +169,11 @@ details.calc code { font-family: var(--mono); font-size: 16px; }
 .bul--compact { gap: 6px; }
 .bul--compact li { font-size: 16px; line-height: 1.55; }
 .bul--compact li::before { top: 9px; width: 6px; height: 6px; }
+.bul--warn li::before { background: var(--warn); }
+/* 보조 설명·근거·캡션 해설 전용 글머리(▸) — 핵심 요점(●)과 시각적으로 구분 */
+.bul--sub { gap: 5px; }
+.bul--sub li { padding-left: 16px; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
+.bul--sub li::before { content: "▸"; position: absolute; left: 0; top: 0; width: auto; height: auto; border-radius: 0; background: none; color: var(--data-2); font-size: 14px; font-weight: 700; line-height: 1.62; }
 /* 변수 유형 뱃지 (Feature 사전용) */
 .vtype { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 14px; font-weight: 700; white-space: nowrap; }
 .vtype--cont { background: var(--ok-soft); color: var(--ok); }

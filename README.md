@@ -25,7 +25,7 @@
 > **Fork 커스터마이징 ([HSoo-Kim/html-report-master](https://github.com/HSoo-Kim/html-report-master))**: [fosemfhtm/html-report-master](https://github.com/fosemfhtm/html-report-master) 기반 개인 맞춤형 포크로 아래 항목을 추가 반영했다.
 > - **좌측 세로 고정 목차 (`.toc-rail`)**: 데스크톱 세로 고정 목차 + Scroll-Spy + 읽기 진행률 바 + 모바일 `목차 ☰` 드로어
 > - **TeX 기반 오프라인 수식 조판 (`scripts/render_tex.py`)**: `<tex-block>` / `<tex-inline>`을 `latex2mathml`로 정적 W3C MathML 변환 (외부 CDN 없음, `data-tex` 원본 보존)
-> - **개조식 설명 카드 (`.bul`)**: 장마다 결론 문장 + 굵은 키워드 중심 개조식 해설 배치
+> - **개조식 설명 · 글머리 기호 위계 구분 (`.bul` / `.bul--sub`)**: 핵심 요점(`●`), 주의·함정(주황 `●`), 근거·캡션 해설·시사점(`▸`)을 시각적으로 구분하고, 암호 같은 전보체 대신 조사·연결어가 살아 있는 이해하기 쉬운 개조식으로 작성
 > - **도식 전용 부각 (Spotlight)**: 시각/탐색 도식에만 선택 부각 적용, 나열식 참고 표(Feature 사전 등)는 항상 100% 선명 유지
 > - **그래프 축 명기 원칙**: 모든 SVG·Canvas·정적 그래프에 x축·y축 지표명과 단위를 빠짐없이 명시 (이중 y축 포함)
 > - **데이터·Feature 사전 표준 & 원문 출처**: 변수 유형(`연속`/`이산`/`메타`)·시간 해상도·값 해상도(Step) 분리 표기, 영어 논문 출처 원문 유지
