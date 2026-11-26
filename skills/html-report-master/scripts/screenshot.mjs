@@ -119,6 +119,12 @@ const LAYOUT_PROBE = `(() => {
   for (const el of document.querySelectorAll('h1,h2,h3,p,li,td,th,figcaption,.big,.linkbtn')) {
     if (el.scrollWidth > el.clientWidth + 1 && getComputedStyle(el).overflowX === 'hidden') clipped.push(el.textContent.trim().slice(0, 30));
   }
+  const cellOver = [];
+  for (const td of document.querySelectorAll('td, th')) {
+    if (!visible(td)) continue;
+    const diff = td.scrollWidth - td.clientWidth;
+    if (diff > 3) cellOver.push(td.tagName.toLowerCase() + ' "' + td.textContent.trim().slice(0, 24) + '" +' + Math.round(diff) + 'px');
+  }
   // 화면에 실제로 보이는 글자 크기. HTML 글자는 계산된 크기, SVG 글자는 화면에 그려진 높이로 본다.
   const small = [];
   for (const el of document.querySelectorAll('body *')) {
@@ -133,7 +139,9 @@ const LAYOUT_PROBE = `(() => {
   return {
     scrollWidth: document.documentElement.scrollWidth, vw,
     height: Math.ceil(document.documentElement.scrollHeight),
-    over: over.slice(0, 8), clipped: clipped.slice(0, 8), small: small.slice(0, 8), smallCount: small.length,
+    over: over.slice(0, 8), clipped: clipped.slice(0, 8),
+    cellOver: cellOver.slice(0, 8), cellOverCount: cellOver.length,
+    small: small.slice(0, 8), smallCount: small.length,
     font: document.fonts.check('700 20px Pretendard') && [...document.fonts].some(f => f.family.replace(/"/g, '') === 'Pretendard' && f.status === 'loaded'),
     brokenImgs: [...document.images].filter(i => i.getAttribute('src') && i.complete && i.naturalWidth === 0).map(i => (i.currentSrc || i.src).slice(0, 80)),
   };
@@ -233,6 +241,7 @@ for (const accent of args.motion ? [] : accents) {
     const lines = [];
     if (probe.scrollWidth > probe.vw + 1) lines.push(`가로 넘침 ${probe.scrollWidth - probe.vw}px: ${probe.over.join(', ')}`);
     if (probe.clipped.length) lines.push(`잘린 글자: ${probe.clipped.join(' / ')}`);
+    if (probe.cellOverCount) lines.push(`표 칸 넘침 ${probe.cellOverCount}곳: ${probe.cellOver.join(' / ')}`);
     if (!probe.font) lines.push('Pretendard 가 로드되지 않음');
     if (probe.brokenImgs.length) lines.push(`깨진 이미지: ${probe.brokenImgs.join(', ')}`);
     if (probe.smallCount) lines.push(`14px 미만 글자 ${probe.smallCount}곳: ${probe.small.join(', ')}`);

@@ -12,6 +12,7 @@
 :root {
   --bg: #f5f5f7; --card: #fff; --ink: #1d1d1f; --ink-2: #48484a; --ink-3: #6e6e73; --line: #e5e5ea;
   --accent: #004191; --accent-soft: #e8eef5; --ok: #248a3d; --warn: #b25000; --bad: #d70015;
+  --infer: #6b21a8; --infer-soft: #f5effa; --infer-line: #d8b4fe;
   --ok-soft: #e3f5e8; --warn-soft: #fff1e0; --top-bg: rgb(245 245 247 / .86); --hover: #e8e8ed;
   --ink-on-dark: #c7c7cc; --media: #111; --ph: #dcdce2;
   /* 차트 계열: 주인공은 대표색, 비교 대상은 회색 단계. 계열이 더 필요하면 여기에 --data-4… 를 이유와 함께 추가한다. */
@@ -133,12 +134,16 @@ footer { padding: 50px 0 80px; color: var(--ink-3); font-size: 15px; }
 .ph { display: grid; place-items: center; aspect-ratio: 16 / 10; border-radius: 12px; background: var(--ph); color: var(--ink-3); font-size: 16px; }
 /* 일반 표: 세 개 이상을 비교하거나 결과 수치를 보여 줄 때. 숫자 열은 .n */
 .tbl { width: 100%; border-collapse: separate; border-spacing: 0; border-radius: var(--r); overflow: hidden; background: var(--card); box-shadow: var(--shadow); font-size: 18px; }
-.tbl th, .tbl td { padding: 13px 20px; border-bottom: 1px solid var(--line); text-align: left; }
+.tbl th, .tbl td { padding: 13px 20px; border-bottom: 1px solid var(--line); text-align: left; vertical-align: top; overflow-wrap: break-word; }
 .tbl thead th { color: var(--ink-3); font-size: 16px; font-weight: 600; }
 .tbl .n { text-align: right; font-variant-numeric: tabular-nums; }
 .tbl tr.hl td { background: var(--accent-soft); font-weight: 700; }
 .tbl tr.hl td:first-child { color: var(--accent); }
 .tbl tr:last-child td { border-bottom: 0; }
+/* 표 셀 내 복수 내용 글머리 목록 */
+.tbl-bul { margin: 0; padding: 0; list-style: none; display: grid; gap: 4px; }
+.tbl-bul li { position: relative; padding-left: 13px; line-height: 1.5; }
+.tbl-bul li::before { content: ""; position: absolute; left: 0; top: 9px; width: 5px; height: 5px; border-radius: 99px; background: var(--accent); }
 /* 그림 칸: 직접 그린 SVG 차트·도식을 담는다. SVG 글자는 본문 글꼴, 16px 이상 */
 .fig { padding: 22px 26px; border-radius: var(--r); background: var(--card); box-shadow: var(--shadow); overflow-x: auto; }
 .fig svg { display: block; width: 100%; height: auto; font-family: var(--font); }
@@ -174,6 +179,18 @@ details.calc code { font-family: var(--mono); font-size: 16px; }
 .bul--sub { gap: 5px; }
 .bul--sub li { padding-left: 16px; font-size: 15px; line-height: 1.55; color: var(--ink-2); }
 .bul--sub li::before { content: "▸"; position: absolute; left: 0; top: 0; width: auto; height: auto; border-radius: 0; background: none; color: var(--data-2); font-size: 14px; font-weight: 700; line-height: 1.62; }
+/* 관측 사실(--ink/--ink-2)과 미관측 추정·해석(--infer)의 시각적 분리 */
+.infer { color: var(--infer); font-weight: 500; text-decoration: underline dotted var(--infer-line) 1.5px; text-underline-offset: 4px; }
+.infer strong { color: var(--infer); font-weight: 700; }
+.infer-tag { display: inline-block; padding: 1px 7px; margin-right: 4px; border-radius: 99px; background: var(--infer-soft); border: 1px solid var(--infer-line); color: var(--infer); font-size: max(14px, .76em); font-weight: 700; line-height: 1.35; vertical-align: 1px; white-space: nowrap; }
+.infer-box { margin-top: 12px; padding: 14px 18px; border-radius: 12px; background: var(--infer-soft); border: 1px dashed var(--infer-line); border-left: 4px solid var(--infer); color: var(--infer); font-size: 16px; line-height: 1.6; }
+.infer-box strong { color: var(--infer); }
+.bul li.is-infer { color: var(--infer); }
+.bul li.is-infer::before { background: var(--infer); }
+.bul li.is-infer strong { color: var(--infer); }
+.epistemic-legend { display: flex; flex-wrap: wrap; align-items: center; gap: 8px 18px; margin-top: 18px; padding: 10px 16px; border-radius: 10px; background: var(--card); border: 1px solid var(--line); font-size: 15px; color: var(--ink-2); }
+.epistemic-legend .el-fact { color: var(--ink); font-weight: 700; }
+.epistemic-legend .el-infer { color: var(--infer); font-weight: 700; }
 /* 변수 유형 뱃지 (Feature 사전용) */
 .vtype { display: inline-block; padding: 2px 9px; border-radius: 99px; font-size: 14px; font-weight: 700; white-space: nowrap; }
 .vtype--cont { background: var(--ok-soft); color: var(--ok); }
